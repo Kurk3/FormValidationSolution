@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form validation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/styles/style.css">
+
+</head>
+<body>
+
+<main>
+
+    <form id="form" class="form-wrapper" action="/" method="POST">
+        <h1>Form Validation</h1>
+        <div class="input-wrapper">
+            <div class="error-name" id="error-name"></div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name">
+        </div>
+
+
+        <div class="input-wrapper">
+            <div class="error-name" id="error-password"></div>
+            <label for="password">Password:</label>
+            <input type="password"
+                   name="password"
+                   id="password">
+        </div>
+
+
+        <div class="input-wrapper">
+            <div class="error-name" id="error-password2"></div>
+            <label for="password">Password:</label>
+            <input type="password"
+                   name="password2"
+                   id="password2">
+        </div>
+
+
+        <div class="input-wrapper">
+            <div class="error-name" id="error-email"></div>
+            <label for="email">Email:</label>
+            <input type="text"
+                   name="email"
+                   id="email">
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</main>
+
+</body>
+
+
+<script>
+    const email = document.getElementById('email');
+    const name = document.getElementById('name');
+    const password = document.getElementById('password');
+    const errorEmail = document.getElementById('error-email');
+    const errorName = document.getElementById('error-name');
+    const errorPassword = document.getElementById('error-password');
+    const errorPassword2 = document.getElementById('error-password2');
+    const form = document.getElementById('form');
+    const errorElement = document.getElementById('error');
+    const password2 = document.getElementById('password2');
+
+
+    form.addEventListener('submit', (e) => {
+        let messages = [];
+        e.preventDefault();
+        if (name.value === '') {
+            messages.push('Name is required');
+            errorName.textContent = 'Name is required';
+            errorName.style.color = 'red';
+            setTimeout(() => {
+                errorName.innerHTML = null;
+            }, 3000);
+        } else if (password.value === '') {
+            messages.push('Password is required');
+            errorPassword.textContent = 'Password is required';
+            errorPassword.style.color = 'red';
+            setTimeout(() => {
+                errorPassword.innerHTML = null;
+            }, 3000);
+        } else if (password.value.length <= 6) {
+
+            messages.push('Password must be at least 6 characters');
+            errorPassword.style.color = 'red';
+            setTimeout(() => {
+                errorPassword.innerHTML = null;
+            }, 3000);
+
+        } else if (password.value !== password2.value) {
+
+            messages.push('Passwords do not match');
+            errorPassword2.style.color = 'red';
+            setTimeout(() => {
+                errorPassword2.innerHTML = null;
+            }, 3000);
+
+        } else if (email.value === '') {
+
+            messages.push('Email is required');
+            errorEmail.textContent = 'Email is required';
+            errorEmail.style.color = 'red';
+            setTimeout(() => {
+                errorEmail.innerHTML = null;
+            }, 3000);
+
+        } else if (!email.value.includes('@')) {
+            messages.push('Email doesn\'t contain @');
+            errorEmail.textContent = 'Email doesn\'t contain @';
+            errorEmail.style.color = 'red';
+            setTimeout(() => {
+                errorEmail.innerHTML = null;
+            }, 3000);
+        } else {
+            form.submit();
+        }
+        if (messages.length > 0) {
+            e.preventDefault();
+            errorElement.innerHTML = messages.join(', ');
+        } else {
+            window.location.href = '/sucess'; // redirectne na specificku stranku ked sa vsetko toto splni v tom javascripte.
+        }
+    });
+</script>
+</html>
